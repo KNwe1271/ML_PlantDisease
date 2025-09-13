@@ -18,19 +18,21 @@ st.set_page_config(
 @st.cache_resource
 def load_model():
     try:
-        # Use the ultra_light_model.keras (109 KB) that fits Streamlit limits
-        model = tf.keras.models.load_model("ultra_light_model.keras")
+        # Use the ultra_light_model.keras (109 KB) that fits Streamlit limits 
+        # model = tf.keras.models.load_model("ultra_light_model.keras")
+          model = tf.keras.models.loadmodel("improved_model_v1.keras")
         st.sidebar.success("✅ Ultra Light Model Loaded (109 KB)")
         return model
     except Exception as e:
         st.error(f"❌ Error loading model: {e}")
-        st.info("📋 Make sure 'ultra_light_model.keras' is in your repository")
+        # st.info("📋 Make sure 'ultra_light_model.keras' is in your repository")
+        st.info("📋 Make sure 'improved_model_v1.keras' is in your repository")
         return None
 
 @st.cache_data
 def load_class_names():
     try:
-        with open("class_names_improved.json", "r") as f:
+        with open("class_names_improved.json", "r") as f:   #check class_names_improved.json
             class_names = json.load(f)
         return class_names
     except Exception as e:
@@ -93,7 +95,7 @@ if uploaded_file is not None:
                 with col2:
                     st.subheader("📊 Diagnosis Results")
                     st.success(f"**Disease:** {disease}")
-                    st.success(f"**Confidence:** {confidence:.2%}")
+                    st.success(f"**Confidence:** {confidence:.2%}")   #check Confidence or Accuracy?
                     
                     # Get plant name
                     if '_' in disease:
@@ -146,4 +148,5 @@ with st.sidebar:
 
 # Footer
 st.markdown("---")
+
 st.caption("Built with ❤️ using TensorFlow and Streamlit | Plant Disease Detection AI")
